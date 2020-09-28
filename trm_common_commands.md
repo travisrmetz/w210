@@ -21,3 +21,6 @@ ssh -i /Users/travismetz/Dropbox/DesktopFolder/aws/trm-private-key.pem ubuntu@ec
 conda env list
 source activate []
 source activate tensorflow2_p36
+
+
+   
