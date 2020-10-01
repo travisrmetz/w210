@@ -8,6 +8,7 @@ tar xvzf [filename]
 ### utilities
 #### cpu and memory utilization
 htop
+nmon
 
 # v2 vm
 
