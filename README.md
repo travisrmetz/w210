@@ -16,3 +16,7 @@ https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbl
 
 #### astronet github
 https://github.com/google-research/exoplanet-ml/tree/master/exoplanet-ml/astronet
+
+#### dissertation
+https://github.com/dinismf/exoplanet_classification_thesis/blob/master/reports/dissertation.pdf
+
