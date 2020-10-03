@@ -5,6 +5,10 @@
 #### TCE list
 CSV with all TCE's is in kepler-robovetter folder.
 
+#### stellarium
+get_skies.py and ssc_generator.yml (in stellarium folder) are from TRM w251 project and are examples of how you use Stellarium's scripting language.  I never got it to work headless (x11 etc) but Greg did
+
+
 #### Literature review and links
 https://docs.google.com/document/d/151AY7xbjxsxmGY2OcXakqFYXvKBICA64gBdTG9wCZfE/edit?usp=sharing 
 
