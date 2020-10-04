@@ -1,6 +1,6 @@
 # w210_planets
 ## Fall 2020
-## Christina Barger, Cullen Kavoussi, Travis Metz, Dean Wang
+## Christine Barger, Cullen Kavoussi, Travis Metz, Dean Wang
 
 #### Project management
 https://docs.google.com/document/d/1XaAeHGVal1ctlBBxCX1fzuqN_SWe4_n72n47J9HB9nI/edit?usp=sharing 
