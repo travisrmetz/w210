@@ -2,6 +2,9 @@
 ## Fall 2020
 ## Christina Barger, Cullen Kavoussi, Travis Metz, Dean Wang
 
+#### Project management
+https://docs.google.com/document/d/1XaAeHGVal1ctlBBxCX1fzuqN_SWe4_n72n47J9HB9nI/edit?usp=sharing 
+
 #### TCE list
 CSV with all TCE's is in kepler-robovetter folder.
 
