@@ -27,3 +27,4 @@ https://github.com/google-research/exoplanet-ml/tree/master/exoplanet-ml/astrone
 #### dissertation
 https://github.com/dinismf/exoplanet_classification_thesis/blob/master/reports/dissertation.pdf
 
+![Transit](/images/transit.gif)
