@@ -11,6 +11,15 @@ CSV with all TCE's is in kepler-robovetter folder.
 #### stellarium
 get_skies.py and ssc_generator.yml (in stellarium folder) are from TRM w251 project and are examples of how you use Stellarium's scripting language.  I never got it to work headless (x11 etc) but Greg did
 
+#### triceratops-examples
+These are example notebooks for using `triceratops` to validate a planet candidate. The `triceratops` package can be installed with the following command:
+
+```
+pip install triceratops
+```
+
+#### dataset-construction
+Currently this folder contains notebooks used to join datasets containing KICs and TICs. The KIC dataset (TCE list) can be found in the kepler-robovetter folder. The file containing TICs can be found at https://exofop.ipac.caltech.edu/tess/.
 
 #### Literature review and links
 https://docs.google.com/document/d/151AY7xbjxsxmGY2OcXakqFYXvKBICA64gBdTG9wCZfE/edit?usp=sharing 
