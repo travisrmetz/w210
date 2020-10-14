@@ -6,7 +6,7 @@ import os
 import stat
 import pandas as pd
 
-LIGHT_CURVE_DIR='light_curves/'
+LIGHT_CURVE_DIR='raw_data/light_curves/'
 
 def lookup_epochs(quarter, cadence):
     LONG_QUARTER_PREFIXES = {'0':['2009131105131'],
@@ -161,6 +161,8 @@ if __name__ == "__main__":
                                      " 7730747 7748238 -c short -t lightcurve -q 7 8")
     parser.add_argument("kepids", action="store", nargs='*', help="One or more Kepler IDs to"
                         " retrieve data from.")
+    parser.add_argument("-n", action="store", type=int, dest="number_of_records", default="40000",
+                        help="Number of records to use from TCE table")
     parser.add_argument("-c", action="store", type=str.lower, dest="cadence", default="long",
                         choices=["short", "long"], help="Specify the type of cadence.  Default="
                         "'%(default)s'.")
@@ -184,6 +186,6 @@ if __name__ == "__main__":
     if len(args["kepids"])==0:
         print ('empty kepids')
         tce2=pd.read_csv('q1_q17_dr25_tce.csv')
-        args['kepids']=tce2.kepid[0:2]
-    
+        args['kepids']=tce2.kepid[0:args['number_of_records']]
+    print('Length of TCE2 for batch:', len(args["kepids"]))
     get_kepler(args)
