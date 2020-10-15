@@ -5,7 +5,7 @@ import argparse
 import os
 import stat
 import pandas as pd
-
+from raw_data_definitions import LIGHT_CURVE_DIR,TCE_TABLE_DIR
 LIGHT_CURVE_DIR='raw_data/light_curves/'
 
 def lookup_epochs(quarter, cadence):
@@ -185,7 +185,9 @@ if __name__ == "__main__":
     
     if len(args["kepids"])==0:
         print ('empty kepids')
-        tce2=pd.read_csv('q1_q17_dr25_tce.csv')
+        print (os.listdir())       
+        tce2=pd.read_csv(TCE_TABLE_DIR)
+        print ('tce2:',tce2)
         args['kepids']=tce2.kepid[0:args['number_of_records']]
     print('Length of TCE2 for batch:', len(args["kepids"]))
     get_kepler(args)

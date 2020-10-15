@@ -30,7 +30,8 @@ def generate_tce_data(tce_table):
 
         try:
             # Process the TCE and retrieve the processed data.
-            flattened_flux, folded_flux, global_view, local_view = process_tce(tce)
+            flattened_flux, folded_flux, local_view, global_view = process_tce(tce)
+            #TRM:  the above statement originally had local and global views reversed so were mislabeled
 
             # Append processed flux light curves for each TCE to output dataframes.
             flattened_fluxes_df = flattened_fluxes_df.append(pd.Series(flattened_flux), ignore_index=True)
