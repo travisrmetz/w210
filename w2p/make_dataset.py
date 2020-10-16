@@ -100,6 +100,7 @@ def main():
     folded_df.to_pickle(OUTPUT_DIR + 'folded.pkl')
     globalbinned_df.to_pickle(OUTPUT_DIR + 'globalbinned.pkl')
     localbinned_df.to_pickle(OUTPUT_DIR + 'localbinned.pkl')
+    tce_table.to_csv(OUTPUT_DIR+'tce_table.csv',index=False)
 
     logger.info('Succesfully saved TCE samples')
     sys.exit()
