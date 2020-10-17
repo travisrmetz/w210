@@ -184,8 +184,6 @@ if __name__ == "__main__":
     print(args)
     
     if len(args["kepids"])==0:
-        print ('empty kepids')
-        print (os.listdir())       
         tce2=pd.read_csv(TCE_TABLE_DIR)
         print ('tce2:',tce2)
         args['kepids']=tce2.kepid[0:args['number_of_records']]
