@@ -30,6 +30,10 @@ https://docs.astropy.org/en/stable/io/fits/
 #### List of Kepler TCE
 https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=tce
 
+#### Documentation on TCE and KOI column names
+https://exoplanetarchive.ipac.caltech.edu/docs/API_kepcandidate_columns.html
+
+
 #### astronet github
 https://github.com/google-research/exoplanet-ml/tree/master/exoplanet-ml/astronet
 

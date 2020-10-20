@@ -6,7 +6,9 @@ import os
 import stat
 import pandas as pd
 from raw_data_definitions import LIGHT_CURVE_DIR,TCE_TABLE_DIR
-LIGHT_CURVE_DIR='raw_data/light_curves/'
+#if running this script directly (rather than calling from get_light_curves have to define local folders)
+#LIGHT_CURVE_DIR='light_curves/'
+#TCE_TABLE_DIR='q1_q17_dr25_tce.csv'
 
 def lookup_epochs(quarter, cadence):
     LONG_QUARTER_PREFIXES = {'0':['2009131105131'],
@@ -74,10 +76,13 @@ def lookup_epochs(quarter, cadence):
     else:
         raise ValueError("*** ERROR in lookup_epochs: Cadence must be 'long' or 'short'.")
 
-def print_cmd(ofile, url, cadence_str, kepid, epochs, cmdtype):
+def print_cmd(ofile, url, cadence_str, kepid, epochs, cmdtype,list_of_files):
     # Print a data download command to an opened file (LUN) given a Kepler ID and array of epochs.
     for epoch in epochs:
         this_filename = "kplr" + kepid + '-' + epoch + cadence_str
+        if this_filename in list_of_files:
+            print ('Discarding:',this_filename)
+            break
         if cmdtype == "curl":
             cmd_str_to_add = " -f -R -o " + LIGHT_CURVE_DIR+this_filename + " "
         else:
@@ -137,13 +142,17 @@ def get_kepler(idict):
     kepids = ["{0:09d}".format(int(x)) for x in kepids]
 
     # Write to script file.
+    list_of_files=os.listdir(LIGHT_CURVE_DIR)
     with open(ofile, 'w') as output_file:
         output_file.write("#!/bin/sh\n")
+        i=1
         for kepid in kepids:
+            print ('Processing kepid', i,' of', len(kepids))
+            i+=1
             if quarters is not None:
                 for quarter in quarters:
                     epoch_strings = lookup_epochs(quarter, cadence)
-                    print_cmd(output_file, base_url, cadence_str, kepid, epoch_strings, cmdtype)
+                    print_cmd(output_file, base_url, cadence_str, kepid, epoch_strings, cmdtype,list_of_files)
             else:
                 print_cmd(output_file, base_url, cadence_str, kepid, epochs, cmdtype)
         # Print a warning message to let users know there will sometimes be Error 404's.
