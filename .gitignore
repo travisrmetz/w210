@@ -2,3 +2,5 @@ CTL_v8_ExoFOP-TESS.csv
 dataset-construction/full_tce_list.csv
 *.ipynb_checkpoints*
 *.full_tce_list
+*.png
+*.fits

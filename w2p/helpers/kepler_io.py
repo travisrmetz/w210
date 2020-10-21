@@ -96,7 +96,6 @@ def kepler_filenames(base_dir,
   Returns:
     A list of filenames.
   """
-  print('Inside of kepler_filenames within kepler_io')
   
   # Pad the Kepler id with zeros to length 9.
   kep_id = "%.9d" % int(kep_id)
@@ -111,9 +110,7 @@ def kepler_filenames(base_dir,
   quarters = sorted(quarters)  # Sort quarters chronologically.
 
   filenames = []
-  #base_dir = os.path.join(base_dir, kep_id[0:4], kep_id)
   base_dir = os.path.join(base_dir)
-  print(base_dir)
   for quarter in quarters:
     for quarter_prefix in quarter_prefixes[quarter]:
       if injected_group:
@@ -125,7 +122,6 @@ def kepler_filenames(base_dir,
                                            cadence_suffix)
       filename = os.path.join(base_dir, base_name)
       # Not all stars have data for all quarters.
-      print (filename)
       if not check_existence or os.path.isfile(filename):
         filenames.append(filename)
 

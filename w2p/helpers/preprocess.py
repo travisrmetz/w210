@@ -23,10 +23,11 @@ def read_and_process_light_curve(kepid, kepler_data_dir, max_gap_width=0.75):
     ValueError: If the spline could not be fit.
   """
   # Read the Kepler light curve.
-  print('Inside of read_and_process_light_curve')
+  
   file_names = kepler_io.kepler_filenames(kepler_data_dir, kepid)
-  print('File names:', file_names)
+  
   if not file_names:
+    print('Did not find FITS files for: ',kepid)
     raise IOError("Failed to find .fits files in %s for Kepler ID %s" %
                   (kepler_data_dir, kepid))
 
