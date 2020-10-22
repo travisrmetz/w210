@@ -2,6 +2,7 @@
 import numpy as np
 import pandas as pd
 import time
+import sys
 import helpers.preprocess as preprocess
 from definitions import OUTPUT_DIR, TCE_TABLE_DIR, KEPLER_DATA_DIR,NUMBER_OF_RECORDS
 
@@ -48,6 +49,7 @@ def generate_tce_data(tce_table):
 
         except:
             print('Failed at processing: ',tce.kepid,'-',tce.tce_plnt_num)
+            print('Error: ',sys.exc_info()[0],' | ',sys.exc_info()[1], ' | ',sys.exc_info()[2],' | ',sys.exc_info()[3])
             failed_count += 1
             failed_kepids.append([tce.kepid,tce.tce_plnt_num])
 
