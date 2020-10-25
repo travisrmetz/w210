@@ -27,5 +27,6 @@ source activate tensorflow2_latest_p37
 tree -o [filename] -n
 -n turns off color codes in text file
 
+find . -name '*.fits' -type f -delete
 
    

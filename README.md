@@ -27,11 +27,16 @@ https://docs.google.com/document/d/151AY7xbjxsxmGY2OcXakqFYXvKBICA64gBdTG9wCZfE/
 #### Documentation for accessing FITS files
 https://docs.astropy.org/en/stable/io/fits/
 
-#### List of Kepler TCE
+#### List of Kepler TCE from DR25 (34,032)
 https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=tce
 
 #### Documentation on TCE and KOI column names
 https://exoplanetarchive.ipac.caltech.edu/docs/API_kepcandidate_columns.html
+https://exoplanetarchive.ipac.caltech.edu/docs/API_tce_columns.html
+
+
+#### DR25 KOI (8054) - has 'final' disposition
+https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=q1_q17_dr25_koi
 
 
 #### astronet github
