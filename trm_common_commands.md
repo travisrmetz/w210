@@ -15,6 +15,9 @@ ssh -i /Users/travismetz/Dropbox/DesktopFolder/aws/trm-private-key.pem ubuntu@ec
 
 ssh -L localhost:8888:localhost:8888 -i /Users/travismetz/Dropbox/DesktopFolder/aws/trm-private-key.pem ubuntu@ec2-3-14-124-166.us-east-2.compute.amazonaws.com
 
+ssh -i /Users/travismetz/Dropbox/DesktopFolder/aws/trm-private-key.pem ubuntu@ec2-3-23-23-2.us-east-2.compute.amazonaws.com
+
+ssh -L localhost:8888:localhost:8888 -i /Users/travismetz/Dropbox/DesktopFolder/aws/trm-private-key.pem ubuntu@ec2-3-23-23-2.us-east-2.compute.amazonaws.com
 
 
 conda env list
