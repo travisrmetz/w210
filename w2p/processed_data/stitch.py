@@ -2,7 +2,7 @@
 #hacked to run across different cpus in different processes
 import pandas as pd
 
-SEQUENCE=2 #number of output files created
+SEQUENCE=4 #number of output files created
 file_list=['failed_kepids','globalbinned_df','localbinned_df','tce_table']
 for file in file_list:
     df=pd.DataFrame()

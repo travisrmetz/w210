@@ -6,7 +6,7 @@ import sys
 import helpers.preprocess as preprocess
 from definitions import OUTPUT_DIR, TCE_TABLE_DIR, KEPLER_DATA_DIR,NUMBER_OF_RECORDS
 
-SEQUENCE=2
+SEQUENCE=4
 TRANCHE=1250
 
 def generate_tce_data(tce_table):
