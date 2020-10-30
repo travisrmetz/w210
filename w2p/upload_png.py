@@ -29,7 +29,7 @@ for png in png_list:
     s3_path = os.path.join(S3_FOLDER, png)
     local_path=os.path.join(PNG_FOLDER,png)
     print('Uploading:',png)
-    s3.upload_file(local_path, bucket, s3_path)
+    s3.upload_file(local_path, bucket, s3_path,ExtraArgs={'ACL':'public-read'})
     execution_time = (time.time() - start_time)
     print('Time in minutes:',execution_time/60 )
     extrapolated_time=(len(png_list)/(i+1))*execution_time
