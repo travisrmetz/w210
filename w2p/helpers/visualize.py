@@ -4,8 +4,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
+from definitions import PNG_FOLDER
 
-def chart_curves(kepid,tce_plnt_num,koi_disposition,global_curve,local_curve):
+def chart_curves(kepid,tce_plnt_num,global_curve,local_curve,koi_disposition):
     fig,axes=plt.subplots(1,2,figsize=(20,6))
     gv=sns.scatterplot(data=global_curve,ax=axes[0])
     lv=sns.scatterplot(data=local_curve,ax=axes[1])
@@ -17,7 +18,7 @@ def chart_curves(kepid,tce_plnt_num,koi_disposition,global_curve,local_curve):
     lv.tick_params(bottom=False)
     plt.show()
     file_name=str(kepid)+'_'+str(tce_plnt_num)+'.png'
-    plt.savefig(file_name)
+    plt.savefig(os.path.join(PNG_FOLDER,file_name))
 
 def main():
     file_path='/home/ubuntu/w210/w2p/processed_data'
