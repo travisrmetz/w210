@@ -19,6 +19,7 @@ def chart_curves(kepid,tce_plnt_num,global_curve,local_curve,koi_disposition):
     plt.show()
     file_name=str(kepid)+'_'+str(tce_plnt_num)+'.png'
     plt.savefig(os.path.join(PNG_FOLDER,file_name))
+    plt.close()
 
 def main():
     file_path='/home/ubuntu/w210/w2p/processed_data'

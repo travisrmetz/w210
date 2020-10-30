@@ -12,7 +12,7 @@ def s3_ls(bucket):
         print(key['Key'])
 
 
-PROCESSED_DATA_DIR='test_download_data'
+#PROCESSED_DATA_DIR='test_download_data'
 
 #files_to_upload=['processed_tce.csv']
 files_to_download=['tce_table.csv','processed_tce.csv','globalbinned_df.csv','localbinned_df.csv','failed_kepids.csv']

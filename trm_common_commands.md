@@ -30,7 +30,8 @@ jupyter notebook stop
 #### cpu and memory utilization
 htop
 nmon
-
+for gpus:  either watch nvidia-smi or install and run nvtop
+needed to conda install tensorflow-gpu at some point
 
 ### gpu vm
 ssh -i /Users/travismetz/Dropbox/DesktopFolder/aws/trm-private-key.pem ubuntu@ec2-3-138-171-160.us-east-2.compute.amazonaws.com

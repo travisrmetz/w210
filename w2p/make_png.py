@@ -19,7 +19,8 @@ def chart(tce_number,
     kepid=tce_id.loc[tce_number].kepid
     
     if results=='':
-        result='status TBD'
+        result=tce_id.loc[tce_number].koi_disposition
+        #ie use original disposition from ground truth, in 3 categories
     else:
         result=results.loc[tce_number].result
     
@@ -45,7 +46,7 @@ print(x_global.shape)
 processed=pd.read_csv(os.path.join(PROCESSED_DATA_DIR,PROCESSED_DATA_CATALOG))
 print(processed.shape)
 
-LIMIT_FOR_TESTING=100
+LIMIT_FOR_TESTING=35000
 processed=processed[0:LIMIT_FOR_TESTING]
 start_time=time.time()
 for i in range(len(processed)):

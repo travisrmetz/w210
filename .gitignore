@@ -6,3 +6,4 @@ dataset-construction/full_tce_list.csv
 exoplanet_classification_thesis
 exoplanet-ml
 kepler-robovetter
+*.png
