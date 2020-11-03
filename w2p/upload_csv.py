@@ -13,7 +13,7 @@ def s3_ls(bucket):
 
 
 #files_to_upload=['processed_tce.csv']
-files_to_upload=['tce_table.csv','processed_tce.csv','globalbinned_df.csv','localbinned_df.csv','failed_kepids.csv']
+files_to_upload=['processed_final.csv','tce_table.csv','processed_tce.csv','globalbinned_df.csv','localbinned_df.csv','failed_kepids.csv']
 
 bucket=S3_BUCKET
 session = boto3.Session(profile_name='default')

@@ -36,7 +36,10 @@ needed to conda install tensorflow-gpu at some point
 ### gpu vm
 ssh -i /Users/travismetz/Dropbox/DesktopFolder/aws/trm-private-key.pem ubuntu@ec2-3-138-171-160.us-east-2.compute.amazonaws.com
 
-ssh -L localhost:8888:localhost:8888 -i /Users/travismetz/Dropbox/DesktopFolder/aws/trm-private-key.pem ubuntu@ec2-3-138-171-160.us-east-2.compute.amazonaws.com
+ssh -L localhost:8886:localhost:8886 -i /Users/travismetz/Dropbox/DesktopFolder/aws/trm-private-key.pem ubuntu@ec2-3-138-171-160.us-east-2.compute.amazonaws.com
+
+since 8886 (which allows local notebook on 8888)
+juoyter notebook --port=8886
 
 ### v3 vm
 
