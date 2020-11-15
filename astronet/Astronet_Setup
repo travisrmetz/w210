@@ -1,0 +1,108 @@
+# Download dependencies
+sudo apt update
+apt install python-pip
+
+pip install --upgrade-pip
+pip install tensorflow
+pip install pandas
+pip install numpy
+pip install scipy
+pip install astropy
+pip install PyDl
+
+# Download instructions for installing Bazel
+sudo apt install curl gnupg
+curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg
+sudo mv bazel.gpg /etc/apt/trusted.gpg.d/
+echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
+sudo apt update && sudo apt install bazel
+
+sudo apt update && sudo apt full-upgrade
+
+# The following packages are needed for testing Bazel
+git clone https://github.com/abseil/abseil-py.git
+
+# Find the abseil-py library in directory and cd into it
+cd abseil-py #make sure the setup file is present
+python setup.py install
+
+# Test Bazel using files from the abseil-y git folder
+bazel test absl/...
+
+# Sample Bazel Test Output
+INFO: Analyzed 110 targets (29 packages loaded, 517 targets configured).
+INFO: Found 56 targets and 54 test targets...
+FAIL: //absl/flags:tests/flags_test.python2 (see /root/.cache/bazel/_bazel_root/543fa2921ef5f78d3a5d96c729480f44/execroot/io_abseil_py/bazel-out/k8-py2-fastbuild/testlogs/absl/flags/tests/flags_test.python2/test.log)
+FAIL: //absl/flags:tests/flags_test.python3 (see /root/.cache/bazel/_bazel_root/543fa2921ef5f78d3a5d96c729480f44/execroot/io_abseil_py/bazel-out/k8-fastbuild/testlogs/absl/flags/tests/flags_test.python3/test.log)
+INFO: Elapsed time: 82.685s, Critical Path: 4.88s
+INFO: 371 processes: 219 internal, 152 linux-sandbox.
+INFO: Build completed, 2 tests FAILED, 371 total actions
+//absl:tests/app_test.python2                                            PASSED in 1.2s
+//absl:tests/app_test.python3                                            PASSED in 2.2s
+//absl:tests/command_name_test.python2                                   PASSED in 0.2s
+//absl:tests/command_name_test.python3                                   PASSED in 0.3s
+//absl/flags:tests/_argument_parser_test.python2                         PASSED in 0.2s
+//absl/flags:tests/_argument_parser_test.python3                         PASSED in 0.3s
+//absl/flags:tests/_flag_test.python2                                    PASSED in 0.2s
+//absl/flags:tests/_flag_test.python3                                    PASSED in 0.3s
+//absl/flags:tests/_flagvalues_test.python2                              PASSED in 0.3s
+//absl/flags:tests/_flagvalues_test.python3                              PASSED in 0.4s
+//absl/flags:tests/_helpers_test.python2                                 PASSED in 0.3s
+//absl/flags:tests/_helpers_test.python3                                 PASSED in 0.3s
+//absl/flags:tests/_validators_test.python2                              PASSED in 0.2s
+//absl/flags:tests/_validators_test.python3                              PASSED in 0.4s
+//absl/flags:tests/argparse_flags_test.python2                           PASSED in 0.5s
+//absl/flags:tests/argparse_flags_test.python3                           PASSED in 0.8s
+//absl/flags:tests/flags_formatting_test.python2                         PASSED in 0.2s
+//absl/flags:tests/flags_formatting_test.python3                         PASSED in 0.3s
+//absl/flags:tests/flags_helpxml_test.python2                            PASSED in 0.2s
+//absl/flags:tests/flags_helpxml_test.python3                            PASSED in 0.3s
+//absl/flags:tests/flags_numeric_bounds_test.python2                     PASSED in 0.2s
+//absl/flags:tests/flags_numeric_bounds_test.python3                     PASSED in 0.4s
+//absl/flags:tests/flags_unicode_literals_test.python2                   PASSED in 0.2s
+//absl/flags:tests/flags_unicode_literals_test.python3                   PASSED in 0.3s
+//absl/logging:tests/converter_test.python2                              PASSED in 0.2s
+//absl/logging:tests/converter_test.python3                              PASSED in 0.3s
+//absl/logging:tests/log_before_import_test.python2                      PASSED in 0.3s
+//absl/logging:tests/log_before_import_test.python3                      PASSED in 0.3s
+//absl/logging:tests/logging_test.python2                                PASSED in 0.4s
+//absl/logging:tests/logging_test.python3                                PASSED in 0.4s
+//absl/logging:tests/verbosity_flag_test.python2                         PASSED in 0.2s
+//absl/logging:tests/verbosity_flag_test.python3                         PASSED in 0.3s
+//absl/testing:tests/absltest_fail_fast_test.python2                     PASSED in 0.6s
+//absl/testing:tests/absltest_fail_fast_test.python3                     PASSED in 1.0s
+//absl/testing:tests/absltest_filtering_test.python2                     PASSED in 1.5s
+//absl/testing:tests/absltest_filtering_test.python3                     PASSED in 2.6s
+//absl/testing:tests/absltest_randomization_test.python2                 PASSED in 1.0s
+//absl/testing:tests/absltest_randomization_test.python3                 PASSED in 1.7s
+//absl/testing:tests/absltest_sharding_test.python2                      PASSED in 2.0s
+//absl/testing:tests/absltest_sharding_test.python3                      PASSED in 3.1s
+//absl/testing:tests/absltest_test.python2                               PASSED in 4.8s
+//absl/testing:tests/absltest_test.python3                               PASSED in 2.4s
+//absl/testing:tests/flagsaver_test.python2                              PASSED in 0.2s
+//absl/testing:tests/flagsaver_test.python3                              PASSED in 0.3s
+//absl/testing:tests/parameterized_test.python2                          PASSED in 0.2s
+//absl/testing:tests/parameterized_test.python3                          PASSED in 0.3s
+//absl/testing:tests/xml_reporter_test.python2                           PASSED in 1.4s
+//absl/testing:tests/xml_reporter_test.python3                           PASSED in 2.3s
+//absl/third_party/unittest3_backport:tests/unittest3_backport_test.python2 PASSED in 0.2s
+//absl/third_party/unittest3_backport:tests/unittest3_backport_test.python3 PASSED in 0.3s
+//absl/flags:tests/flags_test.python2                                    FAILED in 0.3s
+  /root/.cache/bazel/_bazel_root/543fa2921ef5f78d3a5d96c729480f44/execroot/io_abseil_py/bazel-out/k8-py2-fastbuild/testlogs/absl/flags/tests/flags_test.python2/test.log
+//absl/flags:tests/flags_test.python3                                    FAILED in 0.4s
+  /root/.cache/bazel/_bazel_root/543fa2921ef5f78d3a5d96c729480f44/execroot/io_abseil_py/bazel-out/k8-fastbuild/testlogs/absl/flags/tests/flags_test.python3/test.log
+//absl/logging:tests/logging_functional_test.python2                     PASSED in 1.2s
+  Stats over 50 runs: max = 1.2s, min = 0.2s, avg = 0.6s, dev = 0.3s
+//absl/logging:tests/logging_functional_test.python3                     PASSED in 1.2s
+  Stats over 50 runs: max = 1.2s, min = 0.3s, avg = 0.7s, dev = 0.3s
+
+Executed 54 out of 54 tests: 52 tests pass and 2 fail locally.
+INFO: Build completed, 2 tests FAILED, 371 total actions
+
+## Run Unit Tests -- Verify that all dependencies are satisfied by running unit tests
+# clone the astronet git repository
+git clone https://github.com/google-research/exoplanet-ml.git
+
+# cd into correct directory --- /root/exoplanet-ml/exoplanet-ml
+cd exoplanet-ml  # Bazel must run from a directory with a WORKSPACE file
+bazel test astronet/... astrowavenet/... light_curve/... tf_util/... third_party/...
