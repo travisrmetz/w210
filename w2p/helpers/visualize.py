@@ -8,8 +8,8 @@ from definitions import PNG_FOLDER
 
 def chart_curves(kepid,tce_plnt_num,global_curve,local_curve,koi_disposition):
     fig,axes=plt.subplots(1,2,figsize=(20,6))
-    gv=sns.scatterplot(data=global_curve,ax=axes[0])
-    lv=sns.scatterplot(data=local_curve,ax=axes[1])
+    gv=sns.scatterplot(data=global_curve,ax=axes[0],legend=False)
+    lv=sns.scatterplot(data=local_curve,ax=axes[1],legend=False)
     axes[0].set_title('Global View: '+str(kepid)+'-'+str(tce_plnt_num)+' ('+koi_disposition+')')
     axes[1].set_title('Local View: '+str(kepid)+'-'+str(tce_plnt_num)+' ('+koi_disposition+')')
     gv.set(xticklabels=[])
