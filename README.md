@@ -31,7 +31,7 @@ The `triceratops` package can be installed with the following command:
 pip install triceratops
 ```
 
-More on `triceratops` can be found in the [triceratops repo](https://github.com/stevengiacalone/triceratops).
+More on `triceratops` can be found in the tool creators' [triceratops repo](https://github.com/stevengiacalone/triceratops).
 
 Notebooks:
 * `triceratops.ipynb`: this notebook takes in planet candidate entries and outputs probability of being a planet candidate as well as classificiations (false positives or planet candidates) from the probabilities.
