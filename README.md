@@ -9,6 +9,9 @@ This repo has code and notebooks for our final project.
 
 Team ExoPlanet was focused on helping astronomers and scientists understand the different machine learning algorithms used to detect exoplanets. Using data from NASA’s Kepler and TESS satellite missions, which contain graphical views of star brightness over time called threshold crossing events, we are applying known existing planet validation algorithms and comparing these results on a user-friendly website. In addition, we have built our own detection algorithm model that slightly improves the accuracy of exoplanet validation. We intend to use our website to contribute to peer and industry learning regarding exoplanet validation that can be done using machine learning techniques rather than manual visual inspection.
 
+
+The W2P model relies in part on earlier work done on the Astronet model by [Shallue and Vandenberg](https://arxiv.org/abs/1712.05044), with some further inspiration from [Firmino](https://github.com/dinismf/exoplanet_classification_thesis).
+
 ![Transit](/images/TRANSIT.gif)
 
 ### General workflow
