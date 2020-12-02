@@ -1,15 +1,50 @@
-# w210_planets
+# Final Project for W210, MIDS, University of California Berkeley
+# Exoplanet Discovery
 ## Fall 2020
 ## Christine Barger, Cullen Kavoussi, Travis Metz, Dean Wang
 
-#### Project management
-https://docs.google.com/document/d/1XaAeHGVal1ctlBBxCX1fzuqN_SWe4_n72n47J9HB9nI/edit?usp=sharing 
+[Final project website](https://people.ischool.berkeley.edu/~kavoussi/ExoDiscovery/catal.html)
+
+This repo has code and notebooks for our final project.
+
+Team ExoPlanet was focused on helping astronomers and scientists understand the different machine learning algorithms used to detect exoplanets. Using data from NASA’s Kepler and TESS satellite missions, which contain graphical views of star brightness over time called threshold crossing events, we are applying known existing planet validation algorithms and comparing these results on a user-friendly website. In addition, we have built our own detection algorithm model that slightly improves the accuracy of exoplanet validation. We intend to use our website to contribute to peer and industry learning regarding exoplanet validation that can be done using machine learning techniques rather than manual visual inspection.
+
+![Transit](/images/TRANSIT.gif)
+
+### General workflow
+- Get list of TCEs from the [Kepler website](https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=tce)
+- Download raw data files (.FITS) for all TCEs from the [Mikulsi Archive](https://archive.stsci.edu/).  Use a script to create a batch file to retrieve one by one
+- Process data files into global and local vectors representing light curves using existing Kepler processing pipeline
+- Create PNGs of light curves and move to S3 for use in Tableau
+- Use global and local vectors to build w2p CNN model for TCE classification and add those results to runs from Robovetter and Autovetter
+- Add classification results from Triceratops
+- Create output file used by TABLEAU
+
+### Explanation of key folder structure and files
+#### w210
+- data_clean.ipynb:  notebook that reads in the output csv file from Triceratops folder (which begins with the output csv from the w2p model) and creates forweb3.csv, which is the data file used for our Tableau visualizaton
+- forweb3.csv: see above
+- 
+- /triceratops: This folder contains our running versionof the Triceratops model.  See more detailed description below.
+- /w2p:  This folder has our exoplanet classification model
+  * exoplanet_model_v3.ipynb:  this is the notebook which creates the w2p deep learning model to classify TCEs as either planets or no planets.  It outputs a csv file into /processed_data with its results.  In the case of our core CNN model that file is w2p_cnn_final.csv
+  * get_light_curves.py:  master script for retrieving raw light curve data files from online archives.  Calls make_light_curve_batch.py which creates a batch file (get_kepler.sh) that actually retrieves
+  * make_dataset.py:  runs the entire Kepler processing pipeline to using raw light curve/FITS files downloaded into raw_data.  Stores results in /processed_data.  This can be parallelized as demonstrated with 
+  * make_png.py: makes PNG light curves from the processed fit files.  Then s3_upload_png.py moves them to S3 bucket
+  * s3_upload_png.py:  takes PNGs created by make_png.py and uploads to S3 bucket so can be used in TABLEAU visualizations
+  * /raw_data
+    * make_light_curve_batch.py:  python script to create a batch file in light_curves directory and can be run to download the thousands of .FIT curves required for analysis
+    * /light_curves
+      * get_kepler.sh:  batch file that retrieves light curves and stores in this directory
+
+
+Key literature lists
+
+Acknowledgements of where work derived from
+
 
 #### TCE list
 CSV with all TCE's is in kepler-robovetter folder.
-
-#### stellarium
-get_skies.py and ssc_generator.yml (in stellarium folder) are from TRM w251 project and are examples of how you use Stellarium's scripting language.  I never got it to work headless (x11 etc) but Greg did
 
 #### join-to-tess
 This folder contains notebooks used to join Kepler space telescope transit candidate events (TCEs) to TESS space telescope data. It is used in the classification with the `triceratops` model.
