@@ -41,14 +41,6 @@ The W2P model relies in part on earlier work done on the Astronet model by [Shal
       * get_kepler.sh:  batch file that retrieves light curves and stores in this directory
 
 
-Key literature lists
-
-Acknowledgements of where work derived from
-
-
-#### TCE list
-CSV with all TCE's is in kepler-robovetter folder.
-
 #### join-to-tess
 This folder contains notebooks used to join Kepler space telescope transit candidate events (TCEs) to TESS space telescope data. It is used in the classification with the `triceratops` model.
 
@@ -75,29 +67,17 @@ Notebooks:
 * `triceratops.ipynb`: this notebook takes in planet candidate entries and outputs probability of being a planet candidate as well as classificiations (false positives or planet candidates) from the probabilities.
 * `join.ipynb`: this notebook takes in the results of the above classification as well as the w2p classification and merges the datasets together.
 
-#### Literature review and links
-https://docs.google.com/document/d/151AY7xbjxsxmGY2OcXakqFYXvKBICA64gBdTG9wCZfE/edit?usp=sharing 
 
 #### Documentation for accessing FITS files
 https://docs.astropy.org/en/stable/io/fits/
 
-#### List of Kepler TCE from DR25 (34,032)
-https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=tce
 
 #### Documentation on TCE and KOI column names
 https://exoplanetarchive.ipac.caltech.edu/docs/API_kepcandidate_columns.html
 https://exoplanetarchive.ipac.caltech.edu/docs/API_tce_columns.html
 
-
+#### List of Kepler TCE from DR25 (34,032)
+https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=tce
 
 #### DR25 KOI (8054) - has 'final' disposition
 https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=q1_q17_dr25_koi
-
-
-#### astronet github
-https://github.com/google-research/exoplanet-ml/tree/master/exoplanet-ml/astronet
-
-#### dissertation
-https://github.com/dinismf/exoplanet_classification_thesis/blob/master/reports/dissertation.pdf
-
-![Transit](/images/TRANSIT.gif)
