@@ -1,7 +1,10 @@
 # Final Project for W210, MIDS, University of California Berkeley
-# Exoplanet Discovery
-## Fall 2020
-## Christine Barger, Cullen Kavoussi, Travis Metz, Dean Wang
+## Exoplanet Discovery
+### Fall 2020
+### Christine Barger, Cullen Kavoussi, Travis Metz, Dean Wang
+    
+  
+
 
 [Final project website](https://people.ischool.berkeley.edu/~kavoussi/ExoDiscovery/catal.html)
 
@@ -14,7 +17,7 @@ The W2P model relies in part on earlier work done on the Astronet model by [Shal
 
 ![Transit](/images/TRANSIT.gif)
 
-### General workflow
+## General workflow
 - Get list of TCEs from the [Kepler website](https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=tce)
 - Download raw data files (.FITS) for all TCEs from the [Mikulsi Archive](https://archive.stsci.edu/).  Use a script to create a batch file to retrieve one by one
 - Process data files into global and local vectors representing light curves using existing Kepler processing pipeline
@@ -25,34 +28,31 @@ The W2P model relies in part on earlier work done on the Astronet model by [Shal
 
 ### Explanation of key folder structure and files
 #### w210
-- data_clean.ipynb:  notebook that reads in the output csv file from Triceratops folder (which begins with the output csv from the w2p model) and creates forweb3.csv, which is the data file used for our Tableau visualizaton
-- forweb3.csv: see above
-- 
-- /triceratops: This folder contains our running versionof the Triceratops model.  See more detailed description below.
+- /join-to-tess:  This folder contains notebooks used to join Kepler space telescope transit candidate events (TCEs) to TESS space telescope data. It is used in the classification with the `triceratops` model.  The Kepler dataset is called `full_tce_list.csv` and can be found in the `kepler-robovetter` folder.  The TESS dataset is called `CTL_v8_ExoFOP-TESS.csv` and can be downloaded from [ExoFOP-TESS](https://exofop.ipac.caltech.edu/tess/).
+  * `join.ipynb`: takes in the Kepler TCE list file and finds the corresponding TESS object IDs.
+  * `Get Target Pixel File Counts.ipynb`: finds the number of target pixel files each TESS object ID has. This file is necessary for the `triceratops` tool classification
+- /triceratops: This folder contains our running version of the Triceratops model.  See more detailed description below.
+
+  * `triceratops.ipynb`: this notebook takes in planet candidate entries and outputs probability of being a planet candidate as well as classificiations (false positives or planet candidates) from the probabilities.
+  * `join.ipynb`: this notebook takes in the results of the above classification as well as the w2p classification and merges the datasets together.
 - /w2p:  This folder has our exoplanet classification model
-  * exoplanet_model_v3.ipynb:  this is the notebook which creates the w2p deep learning model to classify TCEs as either planets or no planets.  It outputs a csv file into /processed_data with its results.  In the case of our core CNN model that file is w2p_cnn_final.csv
-  * get_light_curves.py:  master script for retrieving raw light curve data files from online archives.  Calls make_light_curve_batch.py which creates a batch file (get_kepler.sh) that actually retrieves
-  * make_dataset.py:  runs the entire Kepler processing pipeline to using raw light curve/FITS files downloaded into raw_data.  Stores results in /processed_data.  This can be parallelized as demonstrated with 
-  * make_png.py: makes PNG light curves from the processed fit files.  Then s3_upload_png.py moves them to S3 bucket
-  * s3_upload_png.py:  takes PNGs created by make_png.py and uploads to S3 bucket so can be used in TABLEAU visualizations
+  * `create_tableau_data_file.ipynb`:  notebook that reads in the output csv file from Triceratops folder (which begins with the output csv from the w2p model) and creates `forweb3.csv`, which is the data file used for our Tableau visualizaton* 
+  * `exoplanet_model_v3.ipynb`:  this is the notebook which creates the w2p deep learning model to classify TCEs as either planets or no planets.  It outputs a csv file into /processed_data with its results.  In the case of our core CNN model that file is `w2p_cnn_final.csv`
+  * `forweb3.csv`: see above
+  * `get_light_curves.py`:  master script for retrieving raw light curve data files from online archives.  Calls make_light_curve_batch.py which creates a batch file (`get_kepler.sh`) and then runs the batch file (with timing).  
+  * `make_dataset.py`:  runs the entire Kepler processing pipeline to using raw light curve/FITS files downloaded into raw_data.  Stores results in /processed_data.  This can be parallelized as demonstrated with 
+  * `make_png.py`: makes PNG light curves from the processed fit files.  Then `s3_upload_png.py` moves them to S3 bucket
+  * /processed data:  This folder has the processed light curve data stored in two files that contain the training data - `globalbinned_df.csv` and `localbinned_df.csv`.  Not stored on github due to space constraints
+    * `w2p_cnn_final.csv`:  this is output file from model showing classifications
+    * /light_curve_png:  this folder stores all the light curve PNGs that are created and then uploaded to S3
   * /raw_data
-    * make_light_curve_batch.py:  python script to create a batch file in light_curves directory and can be run to download the thousands of .FIT curves required for analysis
-    * /light_curves
-      * get_kepler.sh:  batch file that retrieves light curves and stores in this directory
+    * `make_light_curve_batch.py`:  python script to create a batch file in light_curves directory and can be run to download the thousands of .FIT curves required for analysis
+    * /light_curves:  this folder stores all the FITS files downloaded.  Not stored on github due to size
+      * `get_kepler.sh`:  batch file that retrieves light curves and stores in this directory
+  * `s3_upload_png.py`:  takes PNGs created by make_png.py and uploads to S3 bucket so can be used in TABLEAU visualizations
 
 
-#### join-to-tess
-This folder contains notebooks used to join Kepler space telescope transit candidate events (TCEs) to TESS space telescope data. It is used in the classification with the `triceratops` model.
-
-The Kepler dataset is called `full_tce_list.csv` and can be found in the `kepler-robovetter` folder. 
-
-The TESS dataset is called `CTL_v8_ExoFOP-TESS.csv` and can be downloaded from [ExoFOP-TESS](https://exofop.ipac.caltech.edu/tess/).
-
-Notebooks:
-* `join.ipynb`: takes in the Kepler TCE list file and finds the corresponding TESS object IDs.
-* `Get Target Pixel File Counts.ipynb`: finds the number of target pixel files each TESS object ID has. This file is necessary for the `triceratops` tool classification
-
-#### triceratops
+## triceratops
 The `triceratops` tool is used to validate planet candidates and it uses data from the TESS space telescope.
 
 The `triceratops` package can be installed with the following command:
@@ -63,21 +63,16 @@ pip install triceratops
 
 More on `triceratops` can be found in the tool creators' [triceratops repo](https://github.com/stevengiacalone/triceratops).
 
-Notebooks:
-* `triceratops.ipynb`: this notebook takes in planet candidate entries and outputs probability of being a planet candidate as well as classificiations (false positives or planet candidates) from the probabilities.
-* `join.ipynb`: this notebook takes in the results of the above classification as well as the w2p classification and merges the datasets together.
-
-
-#### Documentation for accessing FITS files
+## Documentation for accessing FITS files
 https://docs.astropy.org/en/stable/io/fits/
 
 
-#### Documentation on TCE and KOI column names
+## Documentation on TCE and KOI column names
 https://exoplanetarchive.ipac.caltech.edu/docs/API_kepcandidate_columns.html
 https://exoplanetarchive.ipac.caltech.edu/docs/API_tce_columns.html
 
-#### List of Kepler TCE from DR25 (34,032)
+## List of Kepler TCE from DR25 (34,032)
 https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=tce
 
-#### DR25 KOI (8054) - has 'final' disposition
+## DR25 KOI (8054) - has 'final' disposition
 https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=q1_q17_dr25_koi
