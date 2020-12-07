@@ -50,6 +50,7 @@ The W2P model relies in part on earlier work done on the Astronet model by [Shal
     * /light_curves:  this folder stores all the FITS files downloaded.  Not stored on github due to size
       * `get_kepler.sh`:  batch file that retrieves light curves and stores in this directory
   * `s3_upload_png.py`:  takes PNGs created by make_png.py and uploads to S3 bucket so can be used in TABLEAU visualizations
+- `catalog_tab3.twbx`: Tableau workbook.  Published to Tableau Public [here](https://public.tableau.com/views/catalog_tab3_16067010484330/catalog?:language=en&:retry=yes&:display_count=y&publish=yes&:origin=viz_share_link).  Embedded in [project website](https://people.ischool.berkeley.edu/~kavoussi/ExoDiscovery/)
 
 
 ## triceratops
