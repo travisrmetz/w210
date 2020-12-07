@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ExoDiscovery-Models</title>
+<link rel="stylesheet" type= "text/css" href="static/styles.css"/>
+
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <a href="contact.html">Contact</a>
+  <a href="find.html">Find A Planet</a>
+  <a href="catal.html">Catalog</a>
+  <a href="ourmodel.html">Our Model</a>
+  <a href="algo.html">Models</a>
+  <a href="about.html">About</a>
+  <a href="index.html">Home</a>
+</div>
+
+<h5 style="color:#C0C0C0;font-family:'Roboto',sans-serif;font-size:18px;padding-left:20px"> ExoDiscovery</h5>
+
+<h1 style="color:white;font-family:'Roboto',sans-serif;font-size:40px;text-align:center;padding-top:30px">Models for Validating Exoplanet Candidates</h1>
+
+<div id="toc_container">
+<p class="toc_title" style="color:blue;padding-left: 20px">Contents</p>
+<ul class="toc_list">
+  <li><a href="#comp_models">Comparing Models</a></li>
+  <ul>
+    <li><a href="#autovetter">Autovetter</a></li>
+    <li><a href="#vespa">Robovetter</a></li>
+    <li><a href="#triceratops">Triceratops</a></li>
+    <li><a href="#astronet">Astronet</a></li>
+  </ul>
+  <li><a href="#together">Putting Them All Together</a></li>  
+</ul>
+</div>
+
+<p style="color:#C0C0C0;font-family:'Roboto',sans-serif;font-size:18px;text-align:center; margin-right:500px; margin-left:500px">The transit exoplanet discovery methodology involves studying the light curve of a star to identify changes in the brightness observed from earth. When the light from the star dims, it could be an indication of an orbiting planet transiting in between the star and the observer on earth. But how does one distinguish between a planet versus other factors that could impact a star's brightness?</p>
+
+<h5 style="color:#C0C0C0;font-family:'Roboto',sans-serif;font-size:18px;text-align:center; margin-right:500px; margin-left:500px">For more background on exoplanet discovery methodologies, see the <a href="about.html">About</a> page.</h5>
+
+<h2 id="comp_models" style="color:white;font-family:'Roboto',sans-serif;font-size:30px;text-align:center;padding-top:30px">Comparing Models</h2>
+
+<p style="color:#C0C0C0;font-family:'Roboto',sans-serif;font-size:18px;text-align:center; margin-right:500px; margin-left:500px">Astronomers and data scientists have developed countless models to help validate threshold crossing events as actual planets. These models use different machine learning algorithms, such as random forest, single decision tree, and convolutional neural networks. <br>
+<br>
+Below we discuss 4 of the most salient models in the field of exoplanet discovery. We introduce our own <a href="algo.html">model</a>. <u>Comparing the results of these models helps facilitate exoplanetary validation</u>, by helping determine how to differentiate between model parameters and star features.<br>
+<br>
+We <a href="catal.html">Catalog</a> over 30,000 objects of interest from the Kepler Space Telescope archive of objects of interest, providing a fast, interactive way to compare model results and view individual light curves. </p>
+
+<h3 id="autovetter" style="color:white;font-family:'Roboto',sans-serif;font-size:25px;text-align:center;padding-top:30px">Autovetter:</h2>
+
+ <p style="color:#C0C0C0;font-family:'Roboto',sans-serif;font-size:18px;text-align:center;  margin-right:500px; margin-left:500px">Autovetter was developed by <a href="https://arxiv.org/pdf/1408.1496.pdf">Mccauliff et al</a> in 2015 and uses a random forest model using a variety of previously processed features from various Kepler pipelines to classify TCEs as planets/no-planets.  It was originally trained and developed on approximately 18,000 TCEs (which is what was available at time) (versus the ~34,000 TCEs that have now been cataloged).</p>
+
+<h3 id="vespa" style="color:white;font-family:'Roboto',sans-serif;font-size:25px;text-align:center;padding-top:30px">Robovetter:</h2>
+
+  <p style="color:#C0C0C0;font-family:'Roboto',sans-serif;font-size:18px;text-align:center;  margin-right:500px; margin-left:500px">Robovetter was developed by <a href="https://ui.adsabs.harvard.edu/abs/2016ApJS..224...12C/abstract">Coughlin et al</a>  in 2016 and updated by <a href="https://arxiv.org/pdf/1710.06758.pdf">Thompson et al</a>  in 2018 on the full Date Release 25 Kepler catalog.  It is a single decision tree/flow chart that was originally developed manually (not through a machine learning exercise) and then packaged as an algorithm.  Like Autovetter, it utilizes a variety of features that are results of the full Kepler processing pipeline.</p>
+
+<h3 id="triceratops" style="color:white;font-family:'Roboto',sans-serif;font-size:25px;text-align:center;padding-top:30px">Triceratops:</h2>
+
+<p style="color:#C0C0C0;font-family:'Roboto',sans-serif;font-size:18px;text-align:center;  margin-right:500px; margin-left:500px">The <a href="https://arxiv.org/abs/2002.00691">triceratops tool</a> was developed to validate transiting planet candidates from the TESS telescope - as opposed to other validation models that use data from the older Kepler Space Telescope. Like other validation models, a probability of false positive is calculated for each candidate, and a disposition can be inferred from this probability. The newer TESS telescope focuses on the closest and brightest stars, but has lower resolution compared to Kepler. Due to each pixel potentially containing light from more stars, triceratops factors an increased number of stars into its calculations of the probability of false positives compared to older validation models. The developers of the triceratops tool summarize the steps it uses as follows:<br>
+<br>
+1. Calculate the proportion of flux contributed by each star in the aperture to identify the stars that are bright enough to produce the observed transit-like signal.<br>
+<br>
+2. Using the primary transit of the planet candidate and light curve models of transiting planets and eclipsing binaries, determine the size of the transiting object that maximizes the likelihood of each scenario.<br>
+<br>
+3. Given the properties of the host star, the orbital period of the planet candidate, and the best-fit radius of the transiting object, calculate the prior probability of each scenario.<br>
+<br>
+4. Use these likelihoods and priors to calculate the relative posterior probability of each scenario.</p>
+
+<h3 id="astronet" style="color:white;font-family:'Roboto',sans-serif;font-size:25px;text-align:center;padding-top:30px">Astronet:</h2>
+
+<p style="color:#C0C0C0;font-family:'Roboto',sans-serif;font-size:18px;text-align:center;  margin-right:500px; margin-left:500px">The <a href="https://iopscience.iop.org/article/10.3847/1538-3881/aa9e09/pdf">Astronet model</a> classifies potential planet signals using a common type of deep learning algorithm known as a convolutional neural network &#40CNN&#41. This network trains a model on an existing dataset of TCEs from the Autovetter Planet Candidate Catalog, which produced planet candidate value labels by means of human vetting. Raw light curves from Kepler were downloaded and processed using the following steps:<br>
+<br>
+1. All points corresponding to transits of any other confirmed planets were removed.<br>
+<br>
+2. Low-frequency variability was removed in order to "flatten" the curve, a process that takes a basis spline to the curve and divides it to find best-fit. <br>
+<br>
+These processed light curves were then fed into the neural network, which works by first folding each light curve to show the TCE period and then binning by defining a sequence of uniform intervals of time. Two separate light curves are generated to show differing "views" - a "global view" and a "local view". Finally, these two input vectors are fed into a one-dimensional CNN with max pooling. For each light curve that has both a local and global view, the two vectors are passed through disjointed convolutional columns before they are combined in shared, fully connected layers. The output of each model is the predicted probability that the input is a transiting planet; values close to 1 indicate high confidence that the input is a transiting planet, and values close to 0 indicate high confidence that the input is a false positive.</p>
+
+<h2 id="together" style="color:white;font-family:'Roboto',sans-serif;font-size:30px;text-align:center;padding-top:30px">Putting Them All Together</h2>
+
+<p style="color:#C0C0C0;font-family:'Roboto',sans-serif;font-size:18px;text-align:center;  margin-right:500px; margin-left:500px">In order to take a more holistic, comprehensive approach to exoplanet validation, we can compare the outputs of the most salient models, along with the results of our <a href="ourmodel.html">own model</a>. This type of comparison can illuminate which features are being more heavily weighted across the different models. Below is an example of the model comparison. The list on the left shows a number of kepler star systems and the results of the different models: Planet or No Planet. The chart on the right shows the scores of each model for the star Kepler-5383248.</p>
+
+<img src="static/homepage2.PNG" alt="Algo Comparison" class="center">
+
+<h5 style="color:#C0C0C0;font-family:'Roboto',sans-serif;font-size:18px;text-align:center; margin-bottom:100px; margin-right:500px; margin-left:500px">Now you're ready to explore our <a href="catal.html">Catalog</a> of exoplanet candidates, view individual light curves, and compare validation results! Also, find more details on our own <a href="ourmodel.html">Exoplanet validation model</a>.</h5>
+
+</body>

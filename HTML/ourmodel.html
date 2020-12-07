@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ExoDiscovery-Our Model</title>
+<link rel="stylesheet" type= "text/css" href="static/styles.css"/>
+
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <a href="contact.html">Contact</a>
+  <a href="find.html">Find A Planet</a>
+  <a href="catal.html">Catalog</a>
+  <a href="ourmodel.html">Our Model</a>
+  <a href="algo.html">Models</a>
+  <a href="about.html">About</a>
+  <a href="index.html">Home</a>
+</div>
+
+<h5 style="color:#C0C0C0;font-family:'Roboto',sans-serif;font-size:18px;padding-left:20px"> ExoDiscovery</h5>
+
+<h1 style="color:white;font-family:'Roboto',sans-serif;font-size:40px;text-align:center;padding-top:30px">The ExoDiscovery Model - W2P</h1>
+
+<div id="toc_container">
+<p class="toc_title" style="color:blue;padding-left: 20px">Contents</p>
+<ul class="toc_list">
+  <li><a href="#data">Training and Validation</a></li>
+  <li><a href="#design">Model Design</a></li>
+  <li><a href="#training">Model Training</a></li>
+  <li><a href="#results">Model Results</a></li>
+  <li><a href="#error">Error Analysis</a></li>
+</ul>
+</div>
+
+<p style="color:#C0C0C0;font-family:'Roboto',sans-serif;font-size:18px;text-align:center;  margin-right:500px; margin-left:500px">
+The W2P model is an attempt to conduct exoplanet classification solely from processed light curves, without further features that are available in various other Kepler catalogs. The W2P model relies in part on earlier work in the <a href="https://arxiv.org/abs/1712.05044">Astronet model</a> by Shallue and Vandenberg, with some further inspiration from <a href="https://github.com/dinismf/exoplanet_classification_thesis/blob/master/reports/dissertation.pdf">Firmino</a>. It primarily uses a one dimensional convolutional deep learning model to classify the 34,032 threshold crossing events (TCEs) from the Kepler Data Release 25 Planet Candidate Catalog (DR25) into two groups: planets (4,197) and no-planets (29,835).<br>
+<br>
+For more information and materials on the model and data pipeline development, see the github repository <a href="https://github.com/travisrmetz/w210">here</a>.
+</p>
+
+<h2 id="data" style="color:white;font-family:'Roboto',sans-serif;font-size:30px;text-align:center;padding-top:30px">Training and Validation Data</h2>
+
+<p style="color:#C0C0C0;font-family:'Roboto',sans-serif;font-size:18px;text-align:center;  margin-right:500px; margin-left:500px">We utilized the koi_disposition data field from the <a href="https://exoplanetarchive.ipac.caltech.edu/index.html">NASA Exoplanet Archive</a> as the ground truth label for each TCE, binarizing them into planet/no-planet.  These labels are the result of human vetting of many different features and prior validation models.<br>
+<br>
+We downloaded the light curves for each TCE from the <a href="https://archive.stsci.edu/">Mikulski Archive</a>.  There is a well established processing pipeline for light curves that simplifies the creation of appropriate input training data (again relying in part on code bases from Shallue and Firmino).  This pipeline removes distortion from other known TCEs in the same system, flattens the curves by removing trend and low-frequency variability, and overlays multiple transits from the same candidate on top of one another.  This processing step is storage and compute intensive and is a challenge to parallelize, making it the most resource-intensive part of the model development and the creation of our ExoDiscovery <a href="catal.html">data repository</a>.<br>
+<br>
+The result of that pipeline are ‘global’ and ‘local’ light curves.  Two examples below - one a confirmed planet and the other not.  These two TCEs are quite different to the naked eye and thus their respective classifications seem reasonably straightforward.</p>
+
+<img src="static/example_tce1.png" alt="example tce" width="600" class="center">
+
+<img src="static/example_tce2.png" alt="example tce" width="600" class="center">
+
+<p style="color:#C0C0C0;font-family:'Roboto',sans-serif;font-size:18px;text-align:center;  margin-right:500px; margin-left:500px">Four hundred thirty eight of the 34,032 TCEs have light curves that fail in the processing pipeline for different reasons.  All of these have ‘no-planet’ labels, simplifying their exclusion.  Thus the training data set is 33,594 global and local light curve representations.  We proceeded to split the data into training (80%) and validation (20%) sets.</p>
+
+<h2 id="design" style="color:white;font-family:'Roboto',sans-serif;font-size:30px;text-align:center;padding-top:30px">Model Design</h2>
+
+<p style="color:#C0C0C0;font-family:'Roboto',sans-serif;font-size:18px;text-align:center;  margin-right:500px; margin-left:500px">We experimented with various model structures, including simple fully connected models, one dimensional convolutional models, LSTM models, and combined CNN/LSTM models.  After experimentation, we ultimately settled on a reasonably straightforward one dimensional convolutional model and used the Keras/Tensor Flow framework as our model building technology.<br>
+<br>
+Our model architecture had two distinct input branches, one for each of the global and local light curves.  Both had a sequence of convolution and pooling layers, though the structure of each was different between the global and local views.  The outputs of the convolutional branches were then flattened and combined before being fed through a sequence of dense layers (with dropout utilized) prior to a simple sigmoid classification layer.  The preprocessing pipeline scales the data so no additional data scaling/normalization was required.</p>
+
+<img src="static/conv_branch.png" alt="conv branch" width="600" class="center">
+
+<h2 id="training" style="color:white;font-family:'Roboto',sans-serif;font-size:30px;text-align:center;padding-top:30px">Model Training</h2>
+
+<p style="color:#C0C0C0;font-family:'Roboto',sans-serif;font-size:18px;text-align:center;  margin-right:500px; margin-left:500px">Model training was not hugely resource intensive given that each TCE had a global vector of length 2001 and a local vector of length 201 and our model had approximately ten million trainable parameters.  On an EC2 instance (g4dn.4xlarge) with one NVIDIA T4 GPU, model training took only five to ten minutes.  We also used the <a href="https://keras-team.github.io/keras-tuner/">Keras Tuner framework</a> to optimize model structure and hyperparameters using a Bayesian search technique.  This would typically require a few hours of processing time.</p>
+
+<img src="static/model_training.png" alt="Training" width="600" class="center">
+
+<p style="color:#C0C0C0;font-family:'Roboto',sans-serif;font-size:18px;text-align:center;  margin-right:500px; margin-left:500px">The model converges quite quickly using normal learning rates but additional accuracy was gained by exploring smaller learning rates.  Early stopping was used extensively to moderate over-fitting.  Notably the W2P model is shallower than the Astronet model, but with slightly better accuracy.  This is likely a result of being able to train with significantly more data as we were able to utilize the DR25 Planet Candidate Catalog, which is almost double the size of the DR24 release used by Shallue and Vandenberg.</p>
+
+<img src="static/model_training1.png" alt="Training" width="600" class="center">
+
+<h2 id="results" style="color:white;font-family:'Roboto',sans-serif;font-size:30px;text-align:center;padding-top:30px">Model Results</h2>
+
+<p style="color:#C0C0C0;font-family:'Roboto',sans-serif;font-size:18px;text-align:center;  margin-right:500px; margin-left:500px">Simply predicting that a TCE is not a planet would give you a baseline accuracy rate of 87.7%.  Thus there are approximately twelve points of accuracy available to be captured by a model.  Our model has validation accuracy of 98.0%, which compares favorably to the prior state of the art of 96.0%.</p>
+
+<img src="static/model_results4.png" alt="Algo Comparison" width="600" class="center">
+
+<img src="static/model_results3.png" alt="Algo Comparison" width="600" class="center">
+
+<h2 id="error" style="color:white;font-family:'Roboto',sans-serif;font-size:30px;text-align:center;padding-top:30px">Error Analysis</h2>
+
+<p style="color:#C0C0C0;font-family:'Roboto',sans-serif;font-size:18px;text-align:center;  margin-right:500px; margin-left:500px">Three each of the most ‘true’ members of the four classes - false positives, false negatives, true positives, true negatives - are presented below based on probability differences.</p>
+
+
+<h5 style="color:#C0C0C0;font-family:'Roboto',sans-serif;font-size:18px;text-align:center; margin-right:500px; margin-left:500px">True Negatives</h5>
+<img src="static/error1.png" alt="Error" width="600" class="center">
+<br>
+<h5 style="color:#C0C0C0;font-family:'Roboto',sans-serif;font-size:18px;text-align:center; margin-right:500px; margin-left:500px">True Positives</h5>
+<img src="static/error2.png" alt="Error" width="600" class="center">
+<br>
+<h5 style="color:#C0C0C0;font-family:'Roboto',sans-serif;font-size:18px;text-align:center; margin-right:500px; margin-left:500px">False Negatives</h5>
+<img src="static/error3.png" alt="Error" width="600" class="center">
+<br>
+<h5 style="color:#C0C0C0;font-family:'Roboto',sans-serif;font-size:18px;text-align:center; margin-right:500px; margin-left:500px">False Positives</h5>
+<img src="static/error4.png" alt="Error" width="600" class="center" style="padding-bottom: 90px">
+
+</body>
