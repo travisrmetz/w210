@@ -24,13 +24,22 @@ def chart(tce_number,
     else:
         result=results.loc[tce_number].result
     
+    print ('Result:',result)
+    if result=='FALSE POSITIVE':
+        adj_result='No Planet'
+    if result=='CANDIDATE':
+        adj_result='Planet'
+    if result=='CONFIRMED':
+        adj_result='Planet'
+
+    print(kepid,result,adj_result)
     tce_plnt_num=tce_id.loc[tce_number].tce_plnt_num
     
     chart_curves(str(kepid),
                 tce_plnt_num,
                 x_global[tce_number],
                 x_local[tce_number],
-                result)
+                adj_result)
 
 
 
@@ -45,6 +54,7 @@ print(x_global.shape)
 
 processed=pd.read_csv(os.path.join(PROCESSED_DATA_DIR,PROCESSED_DATA_CATALOG))
 print(processed.shape)
+print(processed.koi_disposition.value_counts())
 
 LIMIT_FOR_TESTING=35000
 processed=processed[0:LIMIT_FOR_TESTING]
